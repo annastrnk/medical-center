@@ -7,17 +7,20 @@ import {
 } from "../../redux/slices/visitSlice";
 
 export default function VisitForm({ isVisible, onClose }) {
-  const dispatch = useDispatch();
+const dispatch = useDispatch();
 
   const { visitToEdit, editMode } = useSelector((state) => state.visits);
 
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     title: "",
     description: "",
     priority: "Звичайна",
     firstname: "",
     doctor: "Виберіть лікаря",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormState);
+
 
   useEffect(() => {
     if (editMode && visitToEdit) {
@@ -27,15 +30,17 @@ export default function VisitForm({ isVisible, onClose }) {
 
   useEffect(() => {
     if (!editMode) {
-      setFormData({
-        title: "",
-        description: "",
-        priority: "Звичайна",
-        firstname: "",
-        doctor: "Виберіть лікаря",
-      });
+      setFormData(initialFormState);
     }
   }, [editMode]);
+
+
+  useEffect(() => {
+    if (!isVisible) {
+      setFormData(initialFormState);
+      dispatch(setCurrentVisit(null)); 
+    }
+  }, [isVisible, dispatch]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -43,6 +48,7 @@ export default function VisitForm({ isVisible, onClose }) {
       [e.target.name]: e.target.value,
     }));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -50,11 +56,13 @@ export default function VisitForm({ isVisible, onClose }) {
       dispatch(updateVisit({ id: visitToEdit.id, updatedData: formData }));
     } else {
       dispatch(createVisit(formData));
+      setFormData(initialFormState); 
     }
 
     dispatch(setCurrentVisit(null));
     onClose();
   };
+
   if (!isVisible) return null;
 
   return (
