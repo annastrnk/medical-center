@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
+import springLogo from "../../../assets/icons8-spring-boot-48.svg";
 
 export default function Header({ onCreateVisitClick, onLoginClick }) {
   const dispatch = useDispatch();
@@ -18,9 +19,7 @@ export default function Header({ onCreateVisitClick, onLoginClick }) {
       }}
     >
       <div className="logo d-flex align-items-center mb-3 mb-md-0">
-        <img
-          src="../../../src/assets/icons8-spring-boot-48.svg"
-          alt="logo"
+        <img src={springLogo} alt="logo"
           style={{
             width: "40px",
             marginRight: "15px",
