@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
-import springLogo from "../../../assets/icons8-spring-boot-48.svg";
+import springLogo from "../../assets/icons8-spring-boot-48.svg";
 
 export default function Header({ onCreateVisitClick, onLoginClick }) {
   const dispatch = useDispatch();
